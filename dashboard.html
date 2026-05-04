@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Deployment Assistant | Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="page-dashboard">
+
+<div class="background-orb orb-one"></div>
+<div class="background-orb orb-two"></div>
+<div class="background-orb orb-three"></div>
+
+<main class="dashboard-shell">
+    <section class="dashboard-hero">
+        <div class="dashboard-copy">
+            <span class="eyebrow">Assistant launchpad</span>
+            <h1>Shape the deployment brief before the AI workspace opens.</h1>
+            <p>Select the stack, choose how you want to provide project context, and launch a cleaner workspace for Dockerfile generation and deployment handoff.</p>
+
+            <div class="tag-row">
+                <span class="tag">Python, Node, and Java stacks</span>
+                <span class="tag">Repository, ZIP, or image input</span>
+                <span class="tag">Streamlit-powered workspace</span>
+            </div>
+        </div>
+
+        <aside class="hero-aside">
+            <h3>How the flow works</h3>
+            <p>Use the dashboard to set context first, then open the AI workspace locally to generate, download, and deploy with a more guided experience.</p>
+
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-count">1</div>
+                    <div>
+                        <div class="step-label">Choose stack</div>
+                        <p>Pick the project type so the assistant can tailor the Dockerfile output.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-count">2</div>
+                    <div>
+                        <div class="step-label">Set input mode</div>
+                        <p>Tell the assistant whether project context comes from GitHub, a ZIP package, or an image.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-count">3</div>
+                    <div>
+                        <div class="step-label">Launch workspace</div>
+                        <p>Start the Streamlit assistant and jump into the richer generation UI.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </section>
+
+    {% if launched %}
+    <div class="alert alert-success">
+        <div>
+            <strong>Assistant is launching</strong>
+            <span>The local Streamlit workspace is starting with {{ selected_project_type }} and {{ selected_input_type }} selected.</span>
+        </div>
+        <a class="ghost-link" href="{{ launch_url }}" target="_blank" rel="noopener">Open workspace</a>
+    </div>
+    {% endif %}
+
+    <section class="dashboard-grid">
+        <form method="POST" class="dashboard-card">
+            <div class="section-heading">
+                <span class="eyebrow">Configuration</span>
+                <h2>Prepare the session</h2>
+                <p>These choices keep the launch flow clear and mirror what users can continue with inside the assistant workspace.</p>
+            </div>
+
+            <div class="form-stack">
+                <div class="field-group">
+                    <label for="project_type">Project type</label>
+                    <div class="select-wrap">
+                        <select id="project_type" name="project_type">
+                            <option value="Python" {% if selected_project_type == "Python" %}selected{% endif %}>Python</option>
+                            <option value="Node" {% if selected_project_type == "Node" %}selected{% endif %}>Node</option>
+                            <option value="Java" {% if selected_project_type == "Java" %}selected{% endif %}>Java</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="input_type">Input method</label>
+                    <div class="select-wrap">
+                        <select id="input_type" name="input_type">
+                            <option value="GitHub URL" {% if selected_input_type == "GitHub URL" %}selected{% endif %}>GitHub URL</option>
+                            <option value="Upload ZIP" {% if selected_input_type == "Upload ZIP" %}selected{% endif %}>Upload ZIP</option>
+                            <option value="Upload Image" {% if selected_input_type == "Upload Image" %}selected{% endif %}>Upload Image</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-button">Launch AI workspace</button>
+                <p class="microcopy">The Streamlit assistant opens locally and keeps the Dockerfile generation flow ready for the next step.</p>
+            </div>
+
+            <div class="launch-card">
+                <h2>Session snapshot</h2>
+                <p>The current selection stays visible here so the handoff feels intentional before the assistant loads.</p>
+                <div class="launch-meta">
+                    <div>
+                        <strong>Project profile</strong>
+                        <span>{{ selected_project_type }}</span>
+                    </div>
+                    <div>
+                        <strong>Input mode</strong>
+                        <span>{{ selected_input_type }}</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="dashboard-card">
+            <div class="section-heading">
+                <span class="eyebrow">Workspace benefits</span>
+                <h2>What the refreshed assistant gives you</h2>
+                <p>Once launched, the workspace continues the same design direction and adds a more modern command center for generation, downloads, and preview deploys.</p>
+            </div>
+
+            <div class="signal-list">
+                <article class="signal-card">
+                    <strong>Clear generation flow</strong>
+                    <p>Inputs, validation, Dockerfile preview, and deploy actions are separated into readable panels instead of one long default form.</p>
+                </article>
+                <article class="signal-card">
+                    <strong>Better visual hierarchy</strong>
+                    <p>Stronger typography, restrained contrast, and cleaner surfaces make the product feel more reliable without sacrificing clarity.</p>
+                </article>
+                <article class="signal-card">
+                    <strong>Mobile-friendly spacing</strong>
+                    <p>The updated cards collapse cleanly on smaller screens so the project still feels polished away from a desktop monitor.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
